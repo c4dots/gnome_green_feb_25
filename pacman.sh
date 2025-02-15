@@ -66,22 +66,35 @@ echo " | PACKAGES=$PACKAGES"
 # Shell Theme
 if [ "$USE_THEME" = true ]; then
     echo ">> Installing theme..."
-    git clone https://github.com/imarkoff/Marble-shell-theme.git
-    cd Marble-shell-theme
-    python install.py --green
-    cd ..
 
-    git clone https://github.com/vinceliuice/Graphite-gtk-theme
-    cd Graphite-gtk-theme
-    sh install.sh --name "Graphite-teal-Dark-nord" --tweaks rimless -c dark
-    cd ..
+    if [ ! -d "$HOME/.themes/Marble-green-dark" ]; then
+        git clone https://github.com/imarkoff/Marble-shell-theme.git
+        cd Marble-shell-theme
+        python install.py --green
+        cd ..
+    else
+        echo ">> Theme already installed, skipping."
+    fi
+
+    if [ ! -d "$HOME/.themes/Marble-green-dark" ]; then
+        git clone https://github.com/vinceliuice/Graphite-gtk-theme
+        cd Graphite-gtk-theme
+        sh install.sh --name "Graphite-teal-Dark-nord" --tweaks rimless -c dark
+        cd ..
+    else
+        echo ">> Theme already installed, skipping."
+    fi
 fi
 
 # Icon Theme
 if [ "$USE_ICONS" = true ]; then
-    echo ">> Installing icon theme..."
-    git clone https://github.com/coderhisham/Futura-Icon-Pack
-    cp -R Futura-Icon-Pack ~/.icons/Futura
+    if [ ! -d "$HOME/.icons/Futura" ]; then
+        echo ">> Installing icon theme..."
+        git clone https://github.com/coderhisham/Futura-Icon-Pack
+        cp -R Futura-Icon-Pack ~/.icons/Futura
+    else
+        echo ">> Icon theme already installed, skipping."
+    fi
 fi
 
 # Background
